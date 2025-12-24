@@ -1,0 +1,79 @@
+mat-card-header {
+  margin-bottom: 2rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+app-model-status {
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+mat-card-title {
+  margin-bottom: 1rem;
+}
+.advanced-options {
+  margin-bottom: 1.5rem;
+}
+mat-panel-title {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+app-summarizer-output {
+  display: block;
+  margin-top: 2rem;
+  margin-bottom: 2.5rem;
+}
+/* Model Status Styles */
+.model-status {
+  padding: 2rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.downloading,
+.init-status,
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.progress-text {
+  font-weight: bold;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.error {
+  color: #f44336;
+  margin: 1rem 0;
+}

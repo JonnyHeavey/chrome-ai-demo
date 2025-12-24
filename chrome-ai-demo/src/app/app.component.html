@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+  <mat-icon class="brand-icon">smart_toy</mat-icon>
+  <span>Web Native AI Showcase</span>
+  <span class="spacer"></span>
+</mat-toolbar>
+
+<div class="container">
+  <div class="content">
+    <app-ai-status
+      [capabilities]="store.capabilities()"
+      [supportSummary]="store.supportSummary()"
+    />
+
+    <nav class="nav-tabs">
+      @for(tab of tabs(); track tab.label) {
+      <a
+        [routerLink]="tab.disabled ? null : tab.link"
+        routerLinkActive="active"
+        mat-button
+        [disabled]="tab.disabled"
+      >
+        <mat-icon>{{ tab.icon }}</mat-icon>
+        {{ tab.label }}
+      </a>
+      }
+    </nav>
+
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+{
+  "name": "chrome-ai-demo",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "chrome-ai-demo/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/chrome-ai-demo",
+        "browser": "chrome-ai-demo/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "chrome-ai-demo/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "chrome-ai-demo/public"
+          }
+        ],
+        "styles": ["chrome-ai-demo/src/styles.scss"]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "options": {
+        "port": 4201
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "chrome-ai-demo:build:production"
+        },
+        "development": {
+          "buildTarget": "chrome-ai-demo:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular/build:extract-i18n",
+      "options": {
+        "buildTarget": "chrome-ai-demo:build"
+      }
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "chrome-ai-demo:build",
+        "staticFilePath": "dist/chrome-ai-demo/browser",
+        "spa": true
+      }
+    }
+  }
+}

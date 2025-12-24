@@ -1,0 +1,10 @@
+<mat-form-field appearance="fill" class="full-width">
+  <mat-label>Text to Summarize</mat-label>
+  <textarea
+    matInput
+    [value]="inputText()"
+    (input)="onInputChange($event)"
+    placeholder="Enter text to summarize..."
+    rows="8"
+  ></textarea>
+</mat-form-field>

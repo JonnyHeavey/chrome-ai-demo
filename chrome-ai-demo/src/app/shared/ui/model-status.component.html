@@ -1,0 +1,28 @@
+<mat-chip-set>
+  @if (isReady()) {
+  <mat-chip highlighted class="ready-chip">
+    <mat-icon matChipAvatar>check_circle</mat-icon>
+    Model Ready
+  </mat-chip>
+  } @else if (downloadError()) {
+  <mat-chip highlighted color="warn">
+    <mat-icon matChipAvatar>error</mat-icon>
+    Error
+  </mat-chip>
+  }
+</mat-chip-set>
+
+@if (isDownloading()) {
+<div class="download-section">
+  <div class="progress-info">
+    <span>Downloading model...</span>
+    <span class="percentage">{{ progress() }}%</span>
+  </div>
+  <mat-progress-bar mode="determinate" [value]="progress()"></mat-progress-bar>
+</div>
+} @if (downloadError()) {
+<div class="error-msg">
+  <span>{{ downloadError() }}</span>
+  <button mat-button color="warn" (click)="retry.emit()">Retry</button>
+</div>
+}

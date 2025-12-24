@@ -1,0 +1,49 @@
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <div class="header-content">
+          <mat-icon
+            [class.supported]="supportSummary() === 'full'"
+            [class.partial]="supportSummary() === 'partial'"
+            [class.unsupported]="supportSummary() === 'none'"
+          >
+            {{
+              supportSummary() === 'none'
+                ? 'cancel'
+                : supportSummary() === 'full'
+                ? 'check_circle'
+                : 'info'
+            }}
+          </mat-icon>
+          <span>Browser Support: {{ supportSummary() | titlecase }}</span>
+        </div>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="capabilities-list">
+      @for (item of capabilities() | keyvalue; track item.key) {
+      <div class="capability-item">
+        <a
+          [href]="item.value.link"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="capability-name"
+        >
+          {{ item.value.name }}
+          <mat-icon class="external-link-icon">open_in_new</mat-icon>
+        </a>
+        <div class="status-indicator">
+          @if (item.value.isSupported) {
+          <mat-icon class="supported-icon">check_circle</mat-icon>
+          <span class="supported-text">Supported</span>
+          } @else {
+          <mat-icon class="unsupported-icon">cancel</mat-icon>
+          <span class="unsupported-text">Not Supported</span>
+          }
+        </div>
+      </div>
+      }
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
