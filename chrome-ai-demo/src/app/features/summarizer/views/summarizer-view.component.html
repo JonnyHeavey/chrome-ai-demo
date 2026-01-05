@@ -1,91 +1,80 @@
-<mat-card>
-  <mat-card-header>
-    <div class="header-content">
-      <div>
-        <mat-card-title>Summarizer API</mat-card-title>
-        <mat-card-subtitle>
-          Summarize text using Chrome's built-in AI
-        </mat-card-subtitle>
-      </div>
-      <app-model-status
-        [isReady]="store.isModelDownloaded()"
-        [isDownloading]="store.isDownloadingModel()"
-        [progress]="store.modelDownloadProgress()"
-        [downloadError]="store.modelDownloadError()"
-        (retry)="store.downloadModel()"
-      />
-    </div>
-  </mat-card-header>
-  <mat-card-content>
-    @if (store.isModelDownloaded()) {
-    <app-summarizer-input
-      [inputText]="store.inputText()"
-      (inputTextChanged)="store.setInputText($event)"
-    />
-
-    <mat-accordion class="advanced-options">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>Advanced Options</mat-panel-title>
-        </mat-expansion-panel-header>
-
-        <div class="options-grid">
-          <mat-form-field>
-            <mat-label>Type</mat-label>
-            <mat-select
-              [value]="store.type()"
-              (selectionChange)="store.setOption('type', $event.value)"
-            >
-              <mat-option value="key-points">Key Points</mat-option>
-              <mat-option value="tldr">TL;DR</mat-option>
-              <mat-option value="teaser">Teaser</mat-option>
-              <mat-option value="headline">Headline</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Length</mat-label>
-            <mat-select
-              [value]="store.length()"
-              (selectionChange)="store.setOption('length', $event.value)"
-            >
-              <mat-option value="short">Short</mat-option>
-              <mat-option value="medium">Medium</mat-option>
-              <mat-option value="long">Long</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Format</mat-label>
-            <mat-select
-              [value]="store.format()"
-              (selectionChange)="store.setOption('format', $event.value)"
-            >
-              <mat-option value="markdown">Markdown</mat-option>
-              <mat-option value="plain-text">Plain Text</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-
-    @if (store.isSummarizing()) {
-    <div class="loading">
-      <mat-spinner diameter="40"></mat-spinner>
-      <p>Summarizing...</p>
-    </div>
-    } @if (store.error()) {
-    <div class="error">
-      <p>Error: {{ store.error() }}</p>
-    </div>
-    }
-
-    <app-summarizer-output [outputText]="store.outputText()" />
-    }
-  </mat-card-content>
-
+<app-feature-layout
+  title="Summarizer API"
+  subtitle="Summarize text using the browser's built-in AI"
+  [isReady]="store.isModelDownloaded()"
+  [isDownloading]="store.isDownloadingModel()"
+  [progress]="store.modelDownloadProgress()"
+  [downloadError]="store.modelDownloadError()"
+  (retry)="store.downloadModel()"
+>
   @if (store.isModelDownloaded()) {
-  <mat-card-actions>
+  <app-summarizer-input
+    [inputText]="store.inputText()"
+    (inputTextChanged)="store.setInputText($event)"
+  />
+
+  <mat-accordion class="advanced-options">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Advanced Options</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="options-grid">
+        <mat-form-field>
+          <mat-label>Type</mat-label>
+          <mat-select
+            [value]="store.type()"
+            (selectionChange)="store.setOption('type', $event.value)"
+          >
+            <mat-option value="key-points">Key Points</mat-option>
+            <mat-option value="tldr">TL;DR</mat-option>
+            <mat-option value="teaser">Teaser</mat-option>
+            <mat-option value="headline">Headline</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Length</mat-label>
+          <mat-select
+            [value]="store.length()"
+            (selectionChange)="store.setOption('length', $event.value)"
+          >
+            <mat-option value="short">Short</mat-option>
+            <mat-option value="medium">Medium</mat-option>
+            <mat-option value="long">Long</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Format</mat-label>
+          <mat-select
+            [value]="store.format()"
+            (selectionChange)="store.setOption('format', $event.value)"
+          >
+            <mat-option value="markdown">Markdown</mat-option>
+            <mat-option value="plain-text">Plain Text</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  @if (store.isSummarizing()) {
+  <div class="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Summarizing...</p>
+  </div>
+  } @if (store.error()) {
+  <div class="error">
+    <p>Error: {{ store.error() }}</p>
+  </div>
+  }
+
+  <app-summarizer-output [outputText]="store.outputText()" />
+  }
+
+  <div actions class="flex gap-2">
+    @if (store.isModelDownloaded()) {
     <button
       mat-flat-button
       color="primary"
@@ -101,6 +90,6 @@
     >
       Clear
     </button>
-  </mat-card-actions>
-  }
-</mat-card>
+    }
+  </div>
+</app-feature-layout>

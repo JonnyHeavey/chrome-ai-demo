@@ -9,4 +9,11 @@ export const appRoutes: Route[] = [
         (m) => m.SummarizerViewComponent
       ),
   },
+  {
+    path: 'language-detector',
+    loadComponent: () =>
+      import(
+        './features/language-detector/views/language-detector-view.component'
+      ).then((m) => m.LanguageDetectorViewComponent),
+  },
 ];

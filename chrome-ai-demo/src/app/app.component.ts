@@ -31,5 +31,13 @@ export class AppComponent {
       disabled:
         !this.store.capabilities()[AI_CAPABILITIES.SUMMARIZER].isSupported,
     },
+    {
+      label: 'Language Detector',
+      link: '/language-detector',
+      icon: 'language',
+      disabled:
+        !this.store.capabilities()[AI_CAPABILITIES.LANGUAGE_DETECTOR]
+          .isSupported,
+    },
   ]);
 }

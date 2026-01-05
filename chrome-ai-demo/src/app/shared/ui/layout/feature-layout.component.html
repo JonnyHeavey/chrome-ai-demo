@@ -1,0 +1,23 @@
+<mat-card>
+  <mat-card-header>
+    <div class="header-content">
+      <div>
+        <mat-card-title>{{ title() }}</mat-card-title>
+        <mat-card-subtitle>{{ subtitle() }}</mat-card-subtitle>
+      </div>
+      <app-model-status
+        [isReady]="isReady()"
+        [isDownloading]="isDownloading()"
+        [progress]="progress()"
+        [downloadError]="downloadError()"
+        (retry)="retry.emit()"
+      />
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-content />
+  </mat-card-content>
+  <mat-card-actions>
+    <ng-content select="[actions]" />
+  </mat-card-actions>
+</mat-card>

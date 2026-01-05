@@ -1,0 +1,11 @@
+<mat-form-field appearance="fill" class="w-full">
+  <mat-label>Text to analyze</mat-label>
+  <textarea
+    matInput
+    [ngModel]="inputText()"
+    (ngModelChange)="inputTextChanged.emit($event)"
+    [disabled]="disabled()"
+    rows="6"
+    placeholder="Enter text to detect its language..."
+  ></textarea>
+</mat-form-field>

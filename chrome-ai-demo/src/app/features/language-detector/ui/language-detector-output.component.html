@@ -1,0 +1,28 @@
+@if (results().length > 0) {
+<mat-card class="mt-6">
+  <mat-card-header>
+    <mat-card-title>Detection Results</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="pt-4">
+    <div class="flex flex-col gap-4">
+      @for (result of results(); track result.detectedLanguage) {
+      <div class="detection-item">
+        <div class="flex justify-between items-center mb-2">
+          <span class="font-bold text-lg uppercase">{{
+            result.detectedLanguage
+          }}</span>
+          <span class="text-sm text-gray-500"
+            >{{ result.confidence | percent : '1.2-2' }} confidence</span
+          >
+        </div>
+        <mat-progress-bar
+          mode="determinate"
+          [value]="result.confidence * 100"
+          [color]="result.confidence > 0.8 ? 'primary' : 'accent'"
+        />
+      </div>
+      }
+    </div>
+  </mat-card-content>
+</mat-card>
+}

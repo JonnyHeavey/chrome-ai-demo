@@ -25,7 +25,7 @@ export class ModelManagementService {
       case AI_CAPABILITIES.TRANSLATOR:
         return globalState.Translation;
       case AI_CAPABILITIES.LANGUAGE_DETECTOR:
-        return globalState.Translation;
+        return globalState.LanguageDetector;
       default:
         return globalState.ai?.[capability];
     }
