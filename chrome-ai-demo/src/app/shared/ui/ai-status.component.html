@@ -22,7 +22,7 @@
     </mat-expansion-panel-header>
 
     <div class="capabilities-list">
-      @for (item of capabilities() | keyvalue; track item.key) {
+      @for (item of orderedCapabilities(); track item.key) {
       <div class="capability-item">
         <a
           [href]="item.value.link"

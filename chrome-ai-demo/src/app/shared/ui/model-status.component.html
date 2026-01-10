@@ -9,6 +9,7 @@
     <mat-icon matChipAvatar>error</mat-icon>
     Error
   </mat-chip>
+  <button mat-button color="warn" (click)="retry.emit()">Retry</button>
   }
 </mat-chip-set>
 
@@ -19,10 +20,5 @@
     <span class="percentage">{{ progress() }}%</span>
   </div>
   <mat-progress-bar mode="determinate" [value]="progress()"></mat-progress-bar>
-</div>
-} @if (downloadError()) {
-<div class="error-msg">
-  <span>{{ downloadError() }}</span>
-  <button mat-button color="warn" (click)="retry.emit()">Retry</button>
 </div>
 }

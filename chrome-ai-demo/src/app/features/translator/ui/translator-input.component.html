@@ -1,0 +1,41 @@
+<div class="translator-layout">
+  <div class="language-row">
+    <mat-form-field appearance="outline">
+      <mat-label>Source Language</mat-label>
+      <mat-select
+        [value]="sourceLanguage()"
+        (selectionChange)="sourceLanguageChange.emit($event.value)"
+        [disabled]="disabled()"
+      >
+        @for (lang of languages; track lang.code) {
+        <mat-option [value]="lang.code">{{ lang.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Target Language</mat-label>
+      <mat-select
+        [value]="targetLanguage()"
+        (selectionChange)="targetLanguageChange.emit($event.value)"
+        [disabled]="disabled()"
+      >
+        @for (lang of languages; track lang.code) {
+        <mat-option [value]="lang.code">{{ lang.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Text to translate</mat-label>
+    <textarea
+      matInput
+      rows="6"
+      [value]="inputText()"
+      (input)="inputTextChanged.emit($any($event.target).value)"
+      [disabled]="disabled()"
+      placeholder="Enter text here..."
+    ></textarea>
+  </mat-form-field>
+</div>

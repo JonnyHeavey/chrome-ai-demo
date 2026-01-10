@@ -17,6 +17,8 @@ import {
   AiCapabilityStatus,
 } from '../../shared/types/chrome-ai.types';
 
+import { AI_CAPABILITIES } from '../../shared/constants/ai-capabilities.constants';
+
 import { INITIAL_CAPABILITIES_CONFIG } from '../config/app.config';
 
 interface AppState {
@@ -34,10 +36,17 @@ export const AppStore = signalStore(
   })),
   withComputed((store) => ({
     supportSummary: computed(() => {
-      const caps = Object.values(store.capabilities());
-      const supportedCount = caps.filter((c) => c.isSupported).length;
+      const allCaps = store.capabilities();
+      const relevantCaps = [
+        allCaps[AI_CAPABILITIES.SUMMARIZER],
+        allCaps[AI_CAPABILITIES.LANGUAGE_DETECTOR],
+        allCaps[AI_CAPABILITIES.TRANSLATOR],
+      ];
+
+      const supportedCount = relevantCaps.filter((c) => c.isSupported).length;
+
       if (supportedCount === 0) return 'none';
-      if (supportedCount === caps.length) return 'full';
+      if (supportedCount === relevantCaps.length) return 'full';
       return 'partial';
     }),
   })),

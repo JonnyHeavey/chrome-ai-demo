@@ -1,0 +1,70 @@
+<app-feature-layout
+  title="Translator"
+  subtitle="Translate text between languages using the browser's built-in AI."
+  [isReady]="store.isModelDownloaded()"
+  [isDownloading]="store.isDownloadingModel()"
+  [progress]="store.modelDownloadProgress()"
+  [downloadError]="store.modelDownloadError()"
+  (retry)="store.downloadModel()"
+>
+  <app-translator-input
+    [sourceLanguage]="store.sourceLanguage()"
+    [targetLanguage]="store.targetLanguage()"
+    [inputText]="store.inputText()"
+    [disabled]="!store.isModelDownloaded() && !store.isDownloadingModel()"
+    (sourceLanguageChange)="store.setLanguages($event, store.targetLanguage())"
+    (targetLanguageChange)="store.setLanguages(store.sourceLanguage(), $event)"
+    (inputTextChanged)="store.setInputText($event)"
+  />
+
+  @if (store.error()) {
+  <div class="bg-red-50 border-l-4 border-red-500 p-4 mt-6">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <svg
+          class="h-5 w-5 text-red-400"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </div>
+      <div class="ml-3">
+        <p class="text-sm text-red-700">
+          {{ store.error() }}
+        </p>
+      </div>
+    </div>
+  </div>
+  }
+
+  <app-translator-output [translatedText]="store.translatedText()" />
+
+  <div actions class="flex gap-2">
+    @if (store.isModelDownloaded()) {
+    <button
+      mat-flat-button
+      color="primary"
+      [disabled]="
+        !store.inputText() ||
+        !store.isModelDownloaded() ||
+        store.isTranslating()
+      "
+      (click)="store.translate()"
+    >
+      @if (store.isTranslating()) { Translating... } @else { Translate }
+    </button>
+    <button
+      mat-button
+      (click)="store.setInputText('')"
+      [disabled]="store.isTranslating() || !store.inputText()"
+    >
+      Clear
+    </button>
+    }
+  </div>
+</app-feature-layout>

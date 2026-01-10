@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LanguageDetector } from '../types/language-detector.types';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class LanguageDetectorService {
   checkAvailability(): boolean {
     return 'LanguageDetector' in self;

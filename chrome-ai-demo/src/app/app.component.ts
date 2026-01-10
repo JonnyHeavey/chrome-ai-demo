@@ -39,5 +39,12 @@ export class AppComponent {
         !this.store.capabilities()[AI_CAPABILITIES.LANGUAGE_DETECTOR]
           .isSupported,
     },
+    {
+      label: 'Translator',
+      link: '/translator',
+      icon: 'translate',
+      disabled:
+        !this.store.capabilities()[AI_CAPABILITIES.TRANSLATOR].isSupported,
+    },
   ]);
 }

@@ -16,4 +16,11 @@ export const appRoutes: Route[] = [
         './features/language-detector/views/language-detector-view.component'
       ).then((m) => m.LanguageDetectorViewComponent),
   },
+  {
+    path: 'translator',
+    loadComponent: () =>
+      import('./features/translator/views/translator-view.component').then(
+        (m) => m.TranslatorViewComponent
+      ),
+  },
 ];

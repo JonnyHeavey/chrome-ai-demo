@@ -1,0 +1,23 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.translator-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px; // Increased gap for better spacing
+}
+
+.language-row {
+  display: flex;
+  gap: 16px;
+
+  mat-form-field {
+    flex: 1;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+}

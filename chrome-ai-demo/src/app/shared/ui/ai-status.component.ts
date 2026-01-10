@@ -1,11 +1,12 @@
-import { Component, input } from '@angular/core';
+import { Component, input, computed } from '@angular/core';
 import { AiCapabilityStatus } from '../types/chrome-ai.types';
-import { KeyValuePipe, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { AI_CAPABILITIES } from '../../shared/constants/ai-capabilities.constants';
 
 @Component({
   selector: 'app-ai-status',
@@ -15,7 +16,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatButtonModule,
     MatIconModule,
     MatExpansionModule,
-    KeyValuePipe,
     TitleCasePipe,
   ],
   templateUrl: './ai-status.component.html',
@@ -24,4 +24,17 @@ import { MatExpansionModule } from '@angular/material/expansion';
 export class AiStatusComponent {
   readonly capabilities = input.required<Record<string, AiCapabilityStatus>>();
   readonly supportSummary = input.required<'none' | 'partial' | 'full'>();
+
+  readonly orderedCapabilities = computed(() => {
+    const caps = this.capabilities();
+    const order = [
+      AI_CAPABILITIES.SUMMARIZER,
+      AI_CAPABILITIES.LANGUAGE_DETECTOR,
+      AI_CAPABILITIES.TRANSLATOR,
+    ];
+
+    return order
+      .map((key) => ({ key, value: caps[key] }))
+      .filter((item) => item.value !== undefined);
+  });
 }

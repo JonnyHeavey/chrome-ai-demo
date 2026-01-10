@@ -1,4 +1,4 @@
-# Chrome AI Demo
+# Web AI Demo
 
 This repository demonstrates the capabilities of the [Web AI APIs](https://developer.chrome.com/docs/ai/built-in-apis) (formerly Chrome AI APIs). It showcases how to build applications that leverage on-device AI models directly in the browser, offering benefits like:
 
@@ -8,9 +8,11 @@ This repository demonstrates the capabilities of the [Web AI APIs](https://devel
 
 ### ✨ Features
 
-- **Summarizer**: Generate summaries of text.
-- **Language Detector**: Detect the language of a given text.
-- **Writer/Rewriter**: (Coming soon) Assist with writing tasks.
+- **Summarizer**: Generate summaries of text with customizable lengths and formats.
+- **Language Detector**: Detect the language of a given text with confidence scores.
+- **Translator**: Translate text between different languages completely offline.
+
+> **Note**: Other APIs such as the **Writer** and **Rewriter** APIs are strictly experimental and will be added to this demo as they become more stable and widely available.
 
 ## 🌐 Browser Support
 

@@ -5,6 +5,7 @@ import {
   withComputed,
   withHooks,
   withMethods,
+  withProps,
   withState,
 } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
@@ -37,99 +38,98 @@ const initialState: LanguageDetectorState = {
 
 export const LanguageDetectorStore = signalStore(
   withState(initialState),
-  withComputed((store, appStore = inject(AppStore)) => ({
+  withProps(() => ({
+    appStore: inject(AppStore),
+    languageDetectorService: inject(LanguageDetectorService),
+  })),
+  withComputed((store) => ({
     hasDetector: computed(() => !!store.detector()),
     isModelDownloaded: computed(
       () =>
-        appStore.capabilities()[AI_CAPABILITIES.LANGUAGE_DETECTOR]
+        store.appStore.capabilities()[AI_CAPABILITIES.LANGUAGE_DETECTOR]
           .isModelDownloaded
     ),
     isDownloadingModel: computed(
       () =>
-        appStore.capabilities()[AI_CAPABILITIES.LANGUAGE_DETECTOR].isDownloading
+        store.appStore.capabilities()[AI_CAPABILITIES.LANGUAGE_DETECTOR]
+          .isDownloading
     ),
     modelDownloadProgress: computed(
       () =>
-        appStore.capabilities()[AI_CAPABILITIES.LANGUAGE_DETECTOR]
+        store.appStore.capabilities()[AI_CAPABILITIES.LANGUAGE_DETECTOR]
           .downloadProgress
     ),
     modelDownloadError: computed(
       () =>
-        appStore.capabilities()[AI_CAPABILITIES.LANGUAGE_DETECTOR].downloadError
+        store.appStore.capabilities()[AI_CAPABILITIES.LANGUAGE_DETECTOR]
+          .downloadError
     ),
   })),
-  withMethods(
-    (
-      store,
-      service = inject(LanguageDetectorService),
-      appStore = inject(AppStore)
-    ) => ({
-      initializeDetector: rxMethod<void>(
-        pipe(
-          switchMap(async () => {
-            return await service.createDetector();
-          }),
-          tap({
-            next: (detector) => {
-              patchState(store, {
-                detector,
-                isDetectorReady: true,
-                error: null,
-              });
-            },
-            error: (err) => {
-              console.error('Failed to initialize Language Detector:', err);
-              patchState(store, {
-                error: err.message,
-                isDetectorReady: false,
-              });
-            },
-          })
-        )
-      ),
-      downloadModel: () => {
-        appStore.downloadModel({
-          capability: AI_CAPABILITIES.LANGUAGE_DETECTOR,
-        });
-      },
-      detectLanguage: rxMethod<string>(
-        pipe(
-          tap((input) =>
+  withMethods((store) => ({
+    initializeDetector: rxMethod<void>(
+      pipe(
+        switchMap(async () => {
+          return await store.languageDetectorService.createDetector();
+        }),
+        tap({
+          next: (detector) => {
             patchState(store, {
-              inputText: input,
-              isDetecting: true,
+              detector,
+              isDetectorReady: true,
               error: null,
-              results: [],
-            })
-          ),
-          switchMap(async (input) => {
-            const detector = store.detector();
-            if (!detector) throw new Error('Detector not initialized');
-            return await detector.detect(input);
-          }),
-          tap({
-            next: (results) =>
-              patchState(store, { results, isDetecting: false }),
-            error: (err) => {
-              console.error('Language detection failed:', err);
-              patchState(store, { error: err.message, isDetecting: false });
-            },
+            });
+          },
+          error: (err) => {
+            console.error('Failed to initialize Language Detector:', err);
+            patchState(store, {
+              error: err.message,
+              isDetectorReady: false,
+            });
+          },
+        })
+      )
+    ),
+    downloadModel: () => {
+      store.appStore.downloadModel({
+        capability: AI_CAPABILITIES.LANGUAGE_DETECTOR,
+      });
+    },
+    detectLanguage: rxMethod<string>(
+      pipe(
+        tap((input) =>
+          patchState(store, {
+            inputText: input,
+            isDetecting: true,
+            error: null,
+            results: [],
           })
-        )
-      ),
-      setInputText(text: string): void {
-        patchState(store, { inputText: text, error: null });
-      },
-      clear(): void {
-        patchState(store, {
-          inputText: '',
-          results: [],
-          error: null,
-          isDetecting: false,
-        });
-      },
-    })
-  ),
+        ),
+        switchMap(async (input) => {
+          const detector = store.detector();
+          if (!detector) throw new Error('Detector not initialized');
+          return await detector.detect(input);
+        }),
+        tap({
+          next: (results) => patchState(store, { results, isDetecting: false }),
+          error: (err) => {
+            console.error('Language detection failed:', err);
+            patchState(store, { error: err.message, isDetecting: false });
+          },
+        })
+      )
+    ),
+    setInputText(text: string): void {
+      patchState(store, { inputText: text, error: null });
+    },
+    clear(): void {
+      patchState(store, {
+        inputText: '',
+        results: [],
+        error: null,
+        isDetecting: false,
+      });
+    },
+  })),
   withHooks({
     onInit(store) {
       store.initializeDetector();

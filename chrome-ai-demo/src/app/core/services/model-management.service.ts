@@ -6,6 +6,7 @@ import {
   AI_CAPABILITIES,
   AiCapabilityId,
 } from '../../shared/constants/ai-capabilities.constants';
+import { AIAvailability } from '../../shared/types/chrome-ai-apis.types';
 
 @Injectable({
   providedIn: 'root',
@@ -14,20 +15,20 @@ export class ModelManagementService {
   private instances = new Map<AiCapabilityId, any>();
 
   private getApi(capability: AiCapabilityId): any {
-    const globalState = globalThis as any;
     switch (capability) {
       case AI_CAPABILITIES.SUMMARIZER:
-        return globalState.Summarizer;
+        return self.Summarizer;
       case AI_CAPABILITIES.WRITER:
-        return globalState.ai?.writer;
+        return self.ai?.writer;
       case AI_CAPABILITIES.REWRITER:
-        return globalState.ai?.rewriter;
+        return self.ai?.rewriter;
       case AI_CAPABILITIES.TRANSLATOR:
-        return globalState.Translation;
+        return self.Translator;
       case AI_CAPABILITIES.LANGUAGE_DETECTOR:
-        return globalState.LanguageDetector;
+        return self.LanguageDetector;
       default:
-        return globalState.ai?.[capability];
+        // Fallback for unknown capabilities within the 'ai' namespace if applicable
+        return (self.ai as any)?.[capability];
     }
   }
 
@@ -35,13 +36,14 @@ export class ModelManagementService {
    * Check if a specific model is available
    */
   async checkAvailability(
-    capability: AiCapabilityId
-  ): Promise<'available' | 'downloadable' | 'unavailable'> {
+    capability: AiCapabilityId,
+    options?: any
+  ): Promise<AIAvailability> {
     const api = this.getApi(capability);
     if (!api) {
       return 'unavailable';
     }
-    return await api.availability();
+    return await api.availability(options);
   }
 
   /**
@@ -70,7 +72,7 @@ export class ModelManagementService {
         );
       }
 
-      const availability = await api.availability();
+      const availability = await api.availability(options);
 
       if (availability === 'unavailable') {
         throw new ModelDownloadError(
