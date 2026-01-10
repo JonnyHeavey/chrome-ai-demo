@@ -1,40 +1,62 @@
-# Web AI Demo
+# Chrome Built-in AI Demo
 
-This repository demonstrates the capabilities of the [Web AI APIs](https://developer.chrome.com/docs/ai/built-in-apis) (formerly Chrome AI APIs). It showcases how to build applications that leverage on-device AI models directly in the browser, offering benefits like:
+This repository demonstrates the capabilities of Google's **Built-in AI**, a set of APIs that enable web applications to run on-device AI models directly in the user's browser.
 
-- **Privacy**: Data stays on the device.
-- **Latency**: No network round-trips for inference.
-- **Offline Capability**: Works without an internet connection.
+These APIs allow for powerful inference (powered by models like Gemini Nano) without server-side processing, offering:
 
-### ✨ Features
+- 🔒 **Privacy**: Sensitive data never leaves the user's device.
+- ⚡ **Zero Latency**: No network round-trips; inference happens locally.
+- 📶 **Offline Capability**: Full functionality without an internet connection.
+- 💰 **Zero Cost**: No tokens or cloud API billing.
 
-- **Summarizer**: Generate summaries of text with customizable lengths and formats.
-- **Language Detector**: Detect the language of a given text with confidence scores.
-- **Translator**: Translate text between different languages completely offline.
+## 🧩 Features
 
-> **Note**: Other APIs such as the **Writer** and **Rewriter** APIs are strictly experimental and will be added to this demo as they become more stable and widely available.
+This demo implements the "Task-Specific" APIs, which are optimized for common web patterns:
 
-## 🌐 Browser Support
+- **[Summarizer API](https://developer.chrome.com/docs/ai/summarizer-api)**: Instantly condenses long-form content (articles, reviews, chat logs) into key points or headlines.
+- **[Language Detector API](https://developer.chrome.com/docs/ai/language-detection)**: High-speed, on-device language identification to route content for translation.
+- **[Translator API](https://developer.chrome.com/docs/ai/translator-api)**: Real-time client-side translation, allowing users to consume content in their preferred language without cloud dependencies.
 
-These APIs are currently experimentally available in Chrome.
+> **Note**: This demo focuses on APIs currently targeting Stable or Origin Trial availability. Experimental APIs like **Writer** and **Rewriter** will be added as they mature.
 
-- **Status**: Early Preview / Canary.
-- **Requirements**: You may need to enable specific flags (e.g., `#optimization-guide-on-device-model`, `#prompt-api-for-gemini-nano`) and download on-device models.
-- **Documentation**: Check the [Official Web AI APIs Documentation](https://developer.chrome.com/docs/ai/built-in-apis) for the latest setup instructions.
+## 🤝 Standards & Compatibility
+
+These APIs are currently **experimental proposals** developed by Chrome.
+
+- They are being incubated in the **W3C Web Incubator Community Group (WICG)**.
+- The goal is to standardize these as part of the "Web AI" specification (e.g., `window.ai`), ensuring eventual compatibility across Firefox, Safari, and Edge.
+- Currently, they operate primarily in Chromium-based browsers.
+
+## 🌐 Browser Support & Setup
+
+These APIs are available starting in **Chrome 138**.
+
+**Prerequisites:**
+
+1.  **Browser**: Chrome 138+ (or Chrome Canary for the absolute latest features).
+2.  **AI Components**: When you first use an API, Chrome may need to download the model binaries.
+    - _Tip:_ You can force the download by visiting `chrome://components` and clicking "Check for update" on the **Optimization Guide On Device Model**.
+
+**Enabling Flags (If using versions older than Stable 138):**
+If the APIs are not active by default, enable these flags in `chrome://flags`:
+
+- `Optimization Guide On Device Model` -> **Enabled BypassPrefRequirement**
+- `Prompt API for Gemini Nano` -> **Enabled**
+
+For the latest status, check the [Chrome Built-in AI Docs](https://developer.chrome.com/docs/ai/built-in-apis).
 
 ## 🧹 Managing AI Models
 
-To save space or reset your environment, you may need to delete the downloaded models.
+These models are stored locally on your machine. To free up disk space or force a re-download for debugging:
 
-**Location**:
-The models are typically stored in the `OptGuideOnDeviceModel` directory.
+**Model Storage Paths:**
 
 - **Windows**: `C:\Users\<User>\AppData\Local\Google\Chrome\User Data\OptGuideOnDeviceModel`
 - **macOS**: `~/Library/Application Support/Google/Chrome/OptGuideOnDeviceModel`
+- **Linux**: `~/.config/google-chrome/OptGuideOnDeviceModel`
 
-**To delete**:
+**To delete:**
 
-1. Close Chrome.
-2. Navigate to the directory above.
-3. Delete the specific version folder or the entire `OptGuideOnDeviceModel` directory.
-4. Restart Chrome (the model will be re-downloaded when requested next time).
+1. Close Chrome completely.
+2. Delete the `OptGuideOnDeviceModel` directory.
+3. Restart Chrome (the model will re-download upon the next API request).
