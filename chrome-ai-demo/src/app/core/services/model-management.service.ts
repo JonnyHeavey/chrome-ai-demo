@@ -76,9 +76,8 @@ export class ModelManagementService {
         );
       }
 
-      let availability;
       // User indicated availability() is the correct method for Prompt API too.
-      availability = await api.availability(options);
+      const availability = await api.availability(options);
 
       if (availability === 'unavailable' || availability === 'no') {
         throw new ModelDownloadError(
