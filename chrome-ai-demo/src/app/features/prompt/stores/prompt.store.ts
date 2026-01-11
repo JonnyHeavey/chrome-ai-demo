@@ -129,7 +129,7 @@ export const PromptStore = signalStore(
     async onInit(store) {
       try {
         const capabilities = await window.LanguageModel.capabilities();
-        if (capabilities.available === 'readily') {
+        if (capabilities.available === 'available') {
           store.downloadModel();
         } else {
           store.downloadModel();

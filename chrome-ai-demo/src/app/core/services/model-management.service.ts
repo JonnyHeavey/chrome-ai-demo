@@ -19,9 +19,9 @@ export class ModelManagementService {
       case AI_CAPABILITIES.SUMMARIZER:
         return window.Summarizer;
       case AI_CAPABILITIES.WRITER:
-        return window.ai?.writer;
+        return window.Writer;
       case AI_CAPABILITIES.REWRITER:
-        return window.ai?.rewriter;
+        return window.Rewriter;
       case AI_CAPABILITIES.TRANSLATOR:
         return window.Translator;
       case AI_CAPABILITIES.LANGUAGE_DETECTOR:
@@ -137,8 +137,30 @@ export class ModelManagementService {
   ): Record<AiCapabilityId, boolean> {
     const supportMap: Record<string, boolean> = {};
     capabilities.forEach((cap) => {
-      const api = this.getApi(cap);
-      supportMap[cap] = !!api;
+      let isSupported = false;
+      switch (cap) {
+        case AI_CAPABILITIES.SUMMARIZER:
+          isSupported = 'Summarizer' in self;
+          break;
+        case AI_CAPABILITIES.WRITER:
+          isSupported = 'Writer' in self;
+          break;
+        case AI_CAPABILITIES.REWRITER:
+          isSupported = 'Rewriter' in self;
+          break;
+        case AI_CAPABILITIES.TRANSLATOR:
+          isSupported = 'Translator' in self;
+          break;
+        case AI_CAPABILITIES.LANGUAGE_DETECTOR:
+          isSupported = 'LanguageDetector' in self;
+          break;
+        case AI_CAPABILITIES.PROMPT:
+          isSupported = 'LanguageModel' in self;
+          break;
+        default:
+          isSupported = false;
+      }
+      supportMap[cap] = isSupported;
     });
     return supportMap as Record<AiCapabilityId, boolean>;
   }

@@ -1,8 +1,10 @@
 import {
+  WriterConstructor,
+  RewriterConstructor,
   SummarizerConstructor,
   TranslatorConstructor,
   LanguageDetectorConstructor,
-  PromptApiConstructor,
+  PromptConstructor,
 } from '../app/shared/types/chrome-ai-apis.types';
 
 declare global {
@@ -10,10 +12,12 @@ declare global {
     Summarizer: SummarizerConstructor;
     Translator: TranslatorConstructor;
     LanguageDetector: LanguageDetectorConstructor;
-    LanguageModel: PromptApiConstructor;
+    LanguageModel: PromptConstructor;
+    Writer: WriterConstructor;
+    Rewriter: RewriterConstructor;
     ai: {
-      writer: any;
-      rewriter: any;
+      writer: WriterConstructor;
+      rewriter: RewriterConstructor;
       languageDetector: LanguageDetectorConstructor;
       summarizer: SummarizerConstructor;
       translator: TranslatorConstructor;

@@ -1,0 +1,10 @@
+@if (outputText()) {
+<mat-card class="output-card">
+  <mat-card-header>
+    <mat-card-title>Draft</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="output-text" [innerHTML]="outputText()"></div>
+  </mat-card-content>
+</mat-card>
+}

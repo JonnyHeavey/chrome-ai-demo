@@ -1,0 +1,106 @@
+<app-feature-layout
+  title="Writer API"
+  subtitle="Generate content for various purposes using the browser's built-in AI"
+  [isReady]="store.isModelDownloaded()"
+  [isDownloading]="store.isDownloadingModel()"
+  [progress]="store.modelDownloadProgress()"
+  [downloadError]="store.modelDownloadError()"
+  (retry)="store.downloadModel()"
+>
+  @if (store.isModelDownloaded()) {
+  <app-writer-input
+    [input]="store.input()"
+    (inputChange)="store.setInput($event)"
+    [disabled]="store.isWriting()"
+  />
+
+  <mat-accordion class="advanced-options">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Advanced Options</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="options-grid">
+        <mat-form-field>
+          <mat-label>Tone</mat-label>
+          <mat-select
+            [value]="store.tone()"
+            (selectionChange)="store.setOption('tone', $event.value)"
+            [disabled]="store.isWriting()"
+          >
+            <mat-option value="neutral">Neutral</mat-option>
+            <mat-option value="formal">Formal</mat-option>
+            <mat-option value="casual">Casual</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Length</mat-label>
+          <mat-select
+            [value]="store.length()"
+            (selectionChange)="store.setOption('length', $event.value)"
+            [disabled]="store.isWriting()"
+          >
+            <mat-option value="short">Short</mat-option>
+            <mat-option value="medium">Medium</mat-option>
+            <mat-option value="long">Long</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Format</mat-label>
+          <mat-select
+            [value]="store.format()"
+            (selectionChange)="store.setOption('format', $event.value)"
+            [disabled]="store.isWriting()"
+          >
+            <mat-option value="markdown">Markdown</mat-option>
+            <mat-option value="plain-text">Plain Text</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width-option">
+          <mat-label>Context (Optional)</mat-label>
+          <input
+            matInput
+            [value]="store.context()"
+            (input)="store.setContext($any($event.target).value)"
+            placeholder="e.g. I am a software engineer"
+            [disabled]="store.isWriting()"
+          />
+        </mat-form-field>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  @if (store.isWriting()) {
+  <div class="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Writing...</p>
+  </div>
+  } @if (store.error()) {
+  <div class="error">
+    <p>Error: {{ store.error() }}</p>
+  </div>
+  }
+
+  <app-writer-output [outputText]="store.output()" />
+  }
+
+  <div actions class="flex gap-2">
+    @if (store.isModelDownloaded()) {
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="store.write()"
+      [disabled]="!store.canWrite()"
+    >
+      <mat-icon>edit_note</mat-icon>
+      Write
+    </button>
+    <button mat-button (click)="store.clear()" [disabled]="store.isWriting()">
+      Clear
+    </button>
+    }
+  </div>
+</app-feature-layout>

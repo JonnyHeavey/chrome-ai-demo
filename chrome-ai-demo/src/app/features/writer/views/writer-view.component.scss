@@ -1,0 +1,48 @@
+mat-card-header {
+  margin-bottom: 2rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+mat-card-title {
+  margin-bottom: 1rem;
+}
+.advanced-options {
+  margin-bottom: 1.5rem;
+}
+mat-panel-title {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+.full-width-option {
+  grid-column: 1 / -1;
+}
+
+app-writer-output {
+  display: block;
+  margin-top: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.error {
+  color: #f44336;
+  margin: 1rem 0;
+}

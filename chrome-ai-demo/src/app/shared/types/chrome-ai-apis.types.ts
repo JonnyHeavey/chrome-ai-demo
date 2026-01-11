@@ -69,11 +69,71 @@ export interface LanguageDetectorConstructor {
 }
 
 /**
- * WRITER / REWRITER API (Future proofing)
+ * WRITER API
  */
+export type WriterTone = 'formal' | 'neutral' | 'casual';
+export type WriterFormat = 'markdown' | 'plain-text';
+export type WriterLength = 'short' | 'medium' | 'long';
+
+export interface WriterOptions {
+  tone?: WriterTone;
+  format?: WriterFormat;
+  length?: WriterLength;
+  sharedContext?: string;
+  context?: string;
+  monitor?: (m: EventTarget) => void;
+  expectedInputLanguages?: string[];
+  expectedContextLanguages?: string[];
+  outputLanguage?: string;
+}
+
 export interface Writer {
-  write(input: string): Promise<string>;
+  write(input: string, options?: { context?: string }): Promise<string>;
+  writeStreaming(
+    input: string,
+    options?: { context?: string }
+  ): ReadableStream<string>;
   destroy(): void;
+  ready: Promise<void>;
+}
+
+export interface WriterConstructor {
+  availability(): Promise<AIAvailability>;
+  create(options?: WriterOptions): Promise<Writer>;
+}
+
+/**
+ * REWRITER API
+ */
+export type RewriterTone = 'more-formal' | 'as-is' | 'more-casual';
+export type RewriterFormat = 'as-is' | 'markdown' | 'plain-text';
+export type RewriterLength = 'shorter' | 'as-is' | 'longer';
+
+export interface RewriterOptions {
+  tone?: RewriterTone;
+  format?: RewriterFormat;
+  length?: RewriterLength;
+  sharedContext?: string;
+  context?: string;
+  monitor?: (m: EventTarget) => void;
+  expectedInputLanguages?: string[];
+  expectedContextLanguages?: string[];
+  outputLanguage?: string;
+}
+
+export interface Rewriter {
+  rewrite(input: string, options?: { context?: string }): Promise<string>;
+  rewriteStreaming(
+    input: string,
+    options?: { context?: string }
+  ): ReadableStream<string>;
+  destroy(): void;
+  ready: Promise<void>;
+}
+
+export interface RewriterConstructor {
+  availability(): Promise<AIAvailability>;
+  create(options?: RewriterOptions): Promise<Rewriter>;
 }
 
 /**
@@ -93,4 +153,5 @@ export interface PromptSession {
 export interface PromptConstructor {
   availability(): Promise<AIAvailability>;
   create(options?: PromptOptions): Promise<PromptSession>;
+  capabilities(): Promise<{ available: AIAvailability }>;
 }

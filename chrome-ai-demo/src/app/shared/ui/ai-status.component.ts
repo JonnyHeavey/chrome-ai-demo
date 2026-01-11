@@ -32,6 +32,8 @@ export class AiStatusComponent {
       AI_CAPABILITIES.LANGUAGE_DETECTOR,
       AI_CAPABILITIES.TRANSLATOR,
       AI_CAPABILITIES.PROMPT,
+      AI_CAPABILITIES.WRITER,
+      AI_CAPABILITIES.REWRITER,
     ];
 
     return order

@@ -1,0 +1,13 @@
+<div class="writer-input-container">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Topic or Prompt</mat-label>
+    <textarea
+      matInput
+      [ngModel]="input()"
+      (ngModelChange)="inputChange.emit($event)"
+      placeholder="e.g. Write an email to my boss asking for a raise"
+      rows="6"
+      [disabled]="disabled()"
+    ></textarea>
+  </mat-form-field>
+</div>

@@ -52,5 +52,11 @@ export class AppComponent {
       icon: 'chat',
       disabled: !this.store.capabilities()[AI_CAPABILITIES.PROMPT].isSupported,
     },
+    {
+      label: 'Writer',
+      link: '/writer',
+      icon: 'edit_note',
+      disabled: !this.store.capabilities()[AI_CAPABILITIES.WRITER].isSupported,
+    },
   ]);
 }

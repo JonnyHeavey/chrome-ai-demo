@@ -39,8 +39,11 @@ export const AppStore = signalStore(
       const allCaps = store.capabilities();
       const relevantCaps = [
         allCaps[AI_CAPABILITIES.SUMMARIZER],
+        allCaps[AI_CAPABILITIES.WRITER],
+        allCaps[AI_CAPABILITIES.REWRITER],
         allCaps[AI_CAPABILITIES.LANGUAGE_DETECTOR],
         allCaps[AI_CAPABILITIES.TRANSLATOR],
+        allCaps[AI_CAPABILITIES.PROMPT],
       ];
 
       const supportedCount = relevantCaps.filter((c) => c.isSupported).length;

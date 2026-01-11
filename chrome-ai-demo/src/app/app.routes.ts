@@ -30,4 +30,11 @@ export const appRoutes: Route[] = [
         (m) => m.PromptViewComponent
       ),
   },
+  {
+    path: 'writer',
+    loadComponent: () =>
+      import('./features/writer/views/writer-view.component').then(
+        (m) => m.WriterViewComponent
+      ),
+  },
 ];
