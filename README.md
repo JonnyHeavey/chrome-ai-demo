@@ -17,8 +17,8 @@ This demo implements the "Task-Specific" APIs, which are optimized for common we
 - **[Language Detector API](https://developer.chrome.com/docs/ai/language-detection)**: High-speed, on-device language identification to route content for translation.
 - **[Translator API](https://developer.chrome.com/docs/ai/translator-api)**: Real-time client-side translation, allowing users to consume content in their preferred language without cloud dependencies.
 - **[Prompt API](https://developer.chrome.com/docs/ai/prompt-api)**: Interactive chat with a built-in large language model (Gemini Nano).
-
-> **Note**: This demo focuses on APIs currently targeting Stable or Origin Trial availability. Experimental APIs like **Writer** and **Rewriter** will be added as they mature.
+- **[Writer API](https://github.com/WICG/writing-assistance-apis)**: Generates new content (e.g., emails, articles) with adjustable tone, format, and length.
+- **[Rewriter API](https://github.com/WICG/writing-assistance-apis)**: Refines existing text by modifying its tone, format, or length.
 
 ## 🤝 Standards & Compatibility
 
@@ -47,11 +47,21 @@ These APIs are available starting in **Chrome 138**.
 2.  **AI Components**: When you first use an API, Chrome may need to download the model binaries.
     - _Tip:_ You can force the download by visiting `chrome://components` and clicking "Check for update" on the **Optimization Guide On Device Model**.
 
-**Enabling Flags (Required for Prompt API):**
-To use the Prompt API and other experimental features, you must enable these flags in `chrome://flags`:
+**Enabling Flags:**
+To use these APIs, you must enable the relevant flags in `chrome://flags`.
+
+**1. Core Optimization Flag (Required for all):**
 
 - `Enables optimization guide on device` -> **Enabled BypassPrefRequirement**
-- `Prompt API for Gemini Nano` -> **Enabled**
+
+**2. API-Specific Flags:**
+
+- **Prompt API**: `Prompt API for Gemini Nano` -> **Enabled**
+- **Summarization API**: `Summarization API for Gemini Nano` -> **Enabled**
+- **Language Detection API**: `Language Detection API` -> **Enabled**
+- **Translation API**: `Translation API` -> **Enabled**
+- **Writer API**: `Writer API for Gemini Nano` -> **Enabled**
+- **Rewriter API**: `Rewriter API for Gemini Nano` -> **Enabled**
 
 > **Important:** If the application reports that your browser is not supported, please verify that you have enabled these flags and restarted Chrome. Even supported Chrome versions will appear unsupported if these API flags are not active.
 
