@@ -48,4 +48,9 @@ export const INITIAL_CAPABILITIES_CONFIG: Record<
     'Language Detector',
     'https://developer.mozilla.org/docs/Web/API/Translator_and_Language_Detector_APIs'
   ),
+  [AI_CAPABILITIES.PROMPT]: createCapabilityConfig(
+    AI_CAPABILITIES.PROMPT,
+    'Prompt API',
+    'https://developer.chrome.com/docs/ai/prompt-api'
+  ),
 };

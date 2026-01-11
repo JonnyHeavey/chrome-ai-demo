@@ -60,6 +60,7 @@ export interface LanguageDetectionResult {
 export interface LanguageDetector {
   detect(input: string): Promise<LanguageDetectionResult[]>;
   destroy(): void;
+  ready: Promise<void>;
 }
 
 export interface LanguageDetectorConstructor {
@@ -73,4 +74,23 @@ export interface LanguageDetectorConstructor {
 export interface Writer {
   write(input: string): Promise<string>;
   destroy(): void;
+}
+
+/**
+ * PROMPT API
+ */
+export interface PromptOptions {
+  systemPrompt?: string;
+  monitor?: (m: EventTarget) => void;
+}
+
+export interface PromptSession {
+  destroy(): void;
+  prompt(input: string, options?: any): Promise<string>;
+  promptStreaming(input: string, options?: any): ReadableStream<string>;
+}
+
+export interface PromptConstructor {
+  availability(): Promise<AIAvailability>;
+  create(options?: PromptOptions): Promise<PromptSession>;
 }

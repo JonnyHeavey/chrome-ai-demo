@@ -1,0 +1,64 @@
+<app-feature-layout
+  title="Prompt API"
+  subtitle="Chat with the built-in Gemini Nano model locally."
+  [isReady]="store.isModelDownloaded()"
+  [isDownloading]="store.isDownloadingModel()"
+  [progress]="store.modelDownloadProgress()"
+  [downloadError]="null"
+  (retry)="store.downloadModel()"
+>
+  <div class="chat-container">
+    <div class="messages" #messagesContainer>
+      @if (!store.isModelDownloaded()) {
+      <div class="empty-state">
+        <div class="icon-container">
+          <span class="icon">download</span>
+        </div>
+        <h3>Model Required</h3>
+        <p>The Gemini Nano model needs to be downloaded to use this feature.</p>
+
+        @if (!store.isDownloadingModel()) {
+        <button mat-flat-button color="primary" (click)="store.downloadModel()">
+          Download Model
+        </button>
+        } @else {
+        <p class="downloading-text">
+          Downloading... {{ store.modelDownloadProgress() }}%
+        </p>
+        }
+      </div>
+      } @else { @for (msg of store.messages(); track $index) {
+      <app-chat-message [message]="msg"></app-chat-message>
+      } @if (store.messages().length === 0) {
+      <div class="empty-state">
+        <span class="icon">chat</span>
+        <h3>Start a Conversation</h3>
+        <p>Type below to chat with Gemini Nano.</p>
+      </div>
+      } }
+    </div>
+
+    <div class="input-area">
+      <app-chat-input
+        [disabled]="
+          !store.isModelDownloaded() || store.status() === 'downloading'
+        "
+        (send)="store.chat($event)"
+      ></app-chat-input>
+    </div>
+  </div>
+
+  <div actions class="flex gap-2">
+    <button
+      mat-button
+      (click)="store.reset()"
+      [disabled]="
+        store.messages().length === 0 ||
+        store.status() === 'downloading' ||
+        store.status() === 'generating'
+      "
+    >
+      Clear Conversation
+    </button>
+  </div>
+</app-feature-layout>

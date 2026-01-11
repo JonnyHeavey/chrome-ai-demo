@@ -46,5 +46,11 @@ export class AppComponent {
       disabled:
         !this.store.capabilities()[AI_CAPABILITIES.TRANSLATOR].isSupported,
     },
+    {
+      label: 'Prompt',
+      link: '/prompt',
+      icon: 'chat',
+      disabled: !this.store.capabilities()[AI_CAPABILITIES.PROMPT].isSupported,
+    },
   ]);
 }

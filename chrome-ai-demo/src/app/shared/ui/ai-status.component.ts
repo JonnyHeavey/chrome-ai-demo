@@ -31,6 +31,7 @@ export class AiStatusComponent {
       AI_CAPABILITIES.SUMMARIZER,
       AI_CAPABILITIES.LANGUAGE_DETECTOR,
       AI_CAPABILITIES.TRANSLATOR,
+      AI_CAPABILITIES.PROMPT,
     ];
 
     return order

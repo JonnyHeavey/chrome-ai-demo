@@ -23,4 +23,11 @@ export const appRoutes: Route[] = [
         (m) => m.TranslatorViewComponent
       ),
   },
+  {
+    path: 'prompt',
+    loadComponent: () =>
+      import('./features/prompt/views/prompt-view.component').then(
+        (m) => m.PromptViewComponent
+      ),
+  },
 ];

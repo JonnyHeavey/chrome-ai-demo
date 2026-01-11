@@ -16,6 +16,7 @@ This demo implements the "Task-Specific" APIs, which are optimized for common we
 - **[Summarizer API](https://developer.chrome.com/docs/ai/summarizer-api)**: Instantly condenses long-form content (articles, reviews, chat logs) into key points or headlines.
 - **[Language Detector API](https://developer.chrome.com/docs/ai/language-detection)**: High-speed, on-device language identification to route content for translation.
 - **[Translator API](https://developer.chrome.com/docs/ai/translator-api)**: Real-time client-side translation, allowing users to consume content in their preferred language without cloud dependencies.
+- **[Prompt API](https://developer.chrome.com/docs/ai/prompt-api)**: Interactive chat with a built-in large language model (Gemini Nano).
 
 > **Note**: This demo focuses on APIs currently targeting Stable or Origin Trial availability. Experimental APIs like **Writer** and **Rewriter** will be added as they mature.
 
@@ -27,6 +28,15 @@ These APIs are currently **experimental proposals** developed by Chrome.
 - The goal is to standardize these as part of the "Web AI" specification (e.g., `window.ai`), ensuring eventual compatibility across Firefox, Safari, and Edge.
 - Currently, they operate primarily in Chromium-based browsers.
 
+## 🚧 Origin Trials & Deployment
+
+Some features, such as the Prompt API, are currently available via **Origin Trial**.
+
+- **Local Development**: These APIs typically work out-of-the-box on `localhost` without registration.
+- **Public Deployment**: To deploy a site using these APIs, you may need to register for the relevant Origin Trial.
+
+Please consult the [Built-in AI Documentation](https://developer.chrome.com/docs/ai/built-in-apis) for the latest details on which APIs require registration and how to participate.
+
 ## 🌐 Browser Support & Setup
 
 These APIs are available starting in **Chrome 138**.
@@ -37,11 +47,18 @@ These APIs are available starting in **Chrome 138**.
 2.  **AI Components**: When you first use an API, Chrome may need to download the model binaries.
     - _Tip:_ You can force the download by visiting `chrome://components` and clicking "Check for update" on the **Optimization Guide On Device Model**.
 
-**Enabling Flags (If using versions older than Stable 138):**
-If the APIs are not active by default, enable these flags in `chrome://flags`:
+**Enabling Flags (Required for Prompt API):**
+To use the Prompt API and other experimental features, you must enable these flags in `chrome://flags`:
 
-- `Optimization Guide On Device Model` -> **Enabled BypassPrefRequirement**
+- `Enables optimization guide on device` -> **Enabled BypassPrefRequirement**
 - `Prompt API for Gemini Nano` -> **Enabled**
+
+> **Important:** If the application reports that your browser is not supported, please verify that you have enabled these flags and restarted Chrome. Even supported Chrome versions will appear unsupported if these API flags are not active.
+
+**Troubleshooting:**
+
+- **Initial Download**: The first time you use the Prompt API, Chrome needs to download the Gemini Nano model. This may be slow and can take a few minutes depending on your connection. You might see the status as "Downloading" or "After Download" during this process.
+- **Verification**: You can verify the model is present by checking `chrome://components` for **Optimization Guide On Device Model**.
 
 For the latest status, check the [Chrome Built-in AI Docs](https://developer.chrome.com/docs/ai/built-in-apis).
 

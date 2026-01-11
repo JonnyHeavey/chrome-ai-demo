@@ -17,18 +17,20 @@ export class ModelManagementService {
   private getApi(capability: AiCapabilityId): any {
     switch (capability) {
       case AI_CAPABILITIES.SUMMARIZER:
-        return self.Summarizer;
+        return window.Summarizer;
       case AI_CAPABILITIES.WRITER:
-        return self.ai?.writer;
+        return window.ai?.writer;
       case AI_CAPABILITIES.REWRITER:
-        return self.ai?.rewriter;
+        return window.ai?.rewriter;
       case AI_CAPABILITIES.TRANSLATOR:
-        return self.Translator;
+        return window.Translator;
       case AI_CAPABILITIES.LANGUAGE_DETECTOR:
-        return self.LanguageDetector;
+        return window.LanguageDetector;
+      case AI_CAPABILITIES.PROMPT:
+        return window.LanguageModel;
       default:
         // Fallback for unknown capabilities within the 'ai' namespace if applicable
-        return (self.ai as any)?.[capability];
+        return (window.ai as any)?.[capability];
     }
   }
 
@@ -43,6 +45,8 @@ export class ModelManagementService {
     if (!api) {
       return 'unavailable';
     }
+    // User indicated availability() is the correct method for Prompt API too.
+    // Falling back to the default api.availability(options) below.
     return await api.availability(options);
   }
 
@@ -72,11 +76,13 @@ export class ModelManagementService {
         );
       }
 
-      const availability = await api.availability(options);
+      let availability;
+      // User indicated availability() is the correct method for Prompt API too.
+      availability = await api.availability(options);
 
-      if (availability === 'unavailable') {
+      if (availability === 'unavailable' || availability === 'no') {
         throw new ModelDownloadError(
-          `${capability} is not available (status: unavailable)`
+          `${capability} is not available (status: ${availability})`
         );
       }
 

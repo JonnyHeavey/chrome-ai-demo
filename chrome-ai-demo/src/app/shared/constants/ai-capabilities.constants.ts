@@ -4,6 +4,7 @@ export const AI_CAPABILITIES = {
   WRITER: 'writer',
   REWRITER: 'rewriter',
   LANGUAGE_DETECTOR: 'languageDetector',
+  PROMPT: 'prompt',
 } as const;
 
 export type AiCapabilityId =

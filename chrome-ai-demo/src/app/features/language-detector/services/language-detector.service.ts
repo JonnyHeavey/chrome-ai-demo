@@ -11,13 +11,13 @@ export class LanguageDetectorService {
     if (!this.checkAvailability()) {
       return 'no';
     }
-    return await (self as any).LanguageDetector.availability();
+    return await window.LanguageDetector.availability();
   }
 
   async createDetector(): Promise<LanguageDetector> {
     if (!this.checkAvailability()) {
       throw new Error('Language Detector API not available in this browser');
     }
-    return await (self as any).LanguageDetector.create();
+    return await window.LanguageDetector.create();
   }
 }
