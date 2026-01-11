@@ -1,0 +1,74 @@
+<div class="rewriter-input-container">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Text to Rewrite</mat-label>
+    <textarea
+      matInput
+      [ngModel]="inputText()"
+      (ngModelChange)="inputTextChange.emit($event)"
+      placeholder="e.g. Enter text you want to rewrite..."
+      rows="6"
+      [disabled]="disabled()"
+    ></textarea>
+  </mat-form-field>
+
+  <div class="options-container">
+    <mat-expansion-panel class="advanced-options">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Advanced Options</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="options-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Tone</mat-label>
+          <mat-select
+            [value]="tone()"
+            (selectionChange)="toneChange.emit($event.value)"
+            [disabled]="disabled()"
+          >
+            <mat-option value="as-is">As Is</mat-option>
+            <mat-option value="more-formal">More Formal</mat-option>
+            <mat-option value="more-casual">More Casual</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Format</mat-label>
+          <mat-select
+            [value]="format()"
+            (selectionChange)="formatChange.emit($event.value)"
+            [disabled]="disabled()"
+          >
+            <mat-option value="as-is">As Is</mat-option>
+            <mat-option value="markdown">Markdown</mat-option>
+            <mat-option value="plain-text">Plain Text</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Length</mat-label>
+          <mat-select
+            [value]="length()"
+            (selectionChange)="lengthChange.emit($event.value)"
+            [disabled]="disabled()"
+          >
+            <mat-option value="as-is">As Is</mat-option>
+            <mat-option value="shorter">Shorter</mat-option>
+            <mat-option value="longer">Longer</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-option">
+          <mat-label>Context</mat-label>
+          <textarea
+            matInput
+            [ngModel]="context()"
+            (ngModelChange)="contextChange.emit($event)"
+            placeholder="e.g. This text is for a blog post about technology..."
+            rows="2"
+            [disabled]="disabled()"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </mat-expansion-panel>
+  </div>
+</div>

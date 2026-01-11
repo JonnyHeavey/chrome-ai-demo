@@ -1,0 +1,25 @@
+.full-width {
+  width: 100%;
+}
+textarea {
+  resize: vertical;
+}
+.options-container {
+  margin-top: 1rem;
+}
+.advanced-options {
+  margin-bottom: 1rem;
+}
+mat-panel-title {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  padding-top: 1rem;
+}
+.full-width-option {
+  grid-column: 1 / -1;
+}

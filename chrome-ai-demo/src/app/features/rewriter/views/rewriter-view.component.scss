@@ -1,0 +1,23 @@
+
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  color: #666;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  color: #f44336;
+}

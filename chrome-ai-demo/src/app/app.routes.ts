@@ -37,4 +37,11 @@ export const appRoutes: Route[] = [
         (m) => m.WriterViewComponent
       ),
   },
+  {
+    path: 'rewriter',
+    loadComponent: () =>
+      import('./features/rewriter/views/rewriter-view.component').then(
+        (m) => m.RewriterViewComponent
+      ),
+  },
 ];

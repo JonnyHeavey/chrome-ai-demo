@@ -1,0 +1,64 @@
+<app-feature-layout
+  title="Rewriter API"
+  title="Rewriter API"
+  subtitle="Rewrite texts with different tones, formats, and lengths using the browser's built-in AI"
+  [isReady]="store.isModelDownloaded()"
+  [isDownloading]="store.isDownloadingModel()"
+  [progress]="store.modelDownloadProgress()"
+  [downloadError]="store.modelDownloadError()"
+  (retry)="store.downloadModel()"
+>
+  <div class="content">
+    <app-rewriter-input
+      [inputText]="store.input()"
+      [context]="store.context()"
+      [tone]="store.tone()"
+      [format]="store.format()"
+      [length]="store.length()"
+      [disabled]="
+        store.isDownloadingModel() ||
+        !store.isModelDownloaded() ||
+        store.isWriting()
+      "
+      (inputTextChange)="store.setInput($event)"
+      (contextChange)="store.setContext($event)"
+      (toneChange)="store.setTone($event)"
+      (formatChange)="store.setFormat($event)"
+      (lengthChange)="store.setLength($event)"
+    ></app-rewriter-input>
+
+    <div class="actions">
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="!store.canRewrite()"
+        (click)="store.rewrite()"
+      >
+        <mat-icon>refresh</mat-icon>
+        Rewrite
+      </button>
+
+      <button
+        mat-button
+        (click)="store.clear()"
+        [disabled]="!store.input() && !store.output()"
+      >
+        Clear
+      </button>
+    </div>
+
+    @if (store.error()) {
+    <div class="error">
+      <mat-icon>error</mat-icon>
+      <span>{{ store.error() }}</span>
+    </div>
+    } @if (store.isWriting()) {
+    <div class="loading">
+      <mat-spinner diameter="24"></mat-spinner>
+      <span>Rewriting...</span>
+    </div>
+    }
+
+    <app-rewriter-output [outputText]="store.output()"></app-rewriter-output>
+  </div>
+</app-feature-layout>

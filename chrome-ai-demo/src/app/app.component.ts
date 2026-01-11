@@ -58,5 +58,12 @@ export class AppComponent {
       icon: 'edit_note',
       disabled: !this.store.capabilities()[AI_CAPABILITIES.WRITER].isSupported,
     },
+    {
+      label: 'Rewriter',
+      link: '/rewriter',
+      icon: 'refresh',
+      disabled:
+        !this.store.capabilities()[AI_CAPABILITIES.REWRITER].isSupported,
+    },
   ]);
 }
